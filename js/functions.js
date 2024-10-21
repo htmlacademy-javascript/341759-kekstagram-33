@@ -34,11 +34,11 @@ const stringNumber = function(string) {
   let result = '';
   const correctedString = string.replaceAll(' ', '').toLowerCase();
   for (let i = 0; i <= correctedString.length - 1; i++) {
-    if (Number(correctedString[i]) == correctedString[i]) {
+    if (Number(correctedString[i]) === +correctedString[i]) {
       result += correctedString[i];
     }
   }
-  return parseInt(result);
+  return parseInt(result, 10);
 };
 
 
