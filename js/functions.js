@@ -47,3 +47,27 @@ stringNumber('ECMAScript 2022'); // 2022
 stringNumber('1 кефир, 0.5 батона'); // 105
 stringNumber('агент 007'); // 7
 stringNumber('а я томат'); // NaN
+
+
+// Напишите функцию, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи в минутах и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
+
+const conversionNumberMinuts = (world) => {
+  const conversionNumber = world.split(':');
+  return parseInt(conversionNumber[0], 10) * 60 + parseInt(conversionNumber[1], 10);
+};
+
+const workingTime = (startWorking, endWorking, startMeeting, timeMeeting) => {
+  if (conversionNumberMinuts(startWorking) <= conversionNumberMinuts(startMeeting)) {
+    const meeting = (conversionNumberMinuts(endWorking) - conversionNumberMinuts(startMeeting));
+    if (meeting >= timeMeeting){
+      return true;
+    }
+  }
+  return false;
+};
+
+workingTime('08:00', '17:30', '14:00', 90); // true
+workingTime('8:0', '10:0', '8:0', 120); // true
+workingTime('08:00', '14:30', '14:00', 90); // false
+workingTime('14:00', '17:30', '08:0', 90); // false
+workingTime('8:00', '17:30', '08:00', 900); // false
