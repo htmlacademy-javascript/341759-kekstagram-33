@@ -102,4 +102,5 @@ const publishedPhotos = () => {
   return photos;
 };
 
-export {publishedPhotos};
+const addPhotos = publishedPhotos();
+export {addPhotos};

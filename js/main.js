@@ -1,4 +1,5 @@
 import './util.js';
-import {publishedPhotos} from './data.js';
+import {addPhotos} from './data.js';
+import {renderPhotos} from './gallery.js';
 
-publishedPhotos();
+renderPhotos(addPhotos);
