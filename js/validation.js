@@ -6,11 +6,11 @@ const MAX_DESCRIPTION_HASHTAGS = 20;
 const MAX_HASHTAGS = 5;
 
 const form = document.querySelector('.img-upload__form');
-const previewNewPhoto = form.querySelector('.img-upload__overlay');
-const buttonCancelForm = form.querySelector('.img-upload__cancel');
-const descriptionForm = form.querySelector('.text__description');
-const hashtagsForm = form.querySelector('.text__hashtags');
-const publicet = form.querySelector('.img-upload__submit');
+const previewNewPhoto = document.querySelector('.img-upload__overlay');
+const buttonCancelForm = document.querySelector('.img-upload__cancel');
+const descriptionForm = document.querySelector('.text__description');
+const hashtagsForm = document.querySelector('.text__hashtags');
+const publicet = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -99,9 +99,9 @@ const onHashtagInput = () => {
 inputHashtag.addEventListener('input', onHashtagInput);
 
 form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
   }
 });
 
@@ -115,7 +115,7 @@ const onDocumentKeydown = (evt) => {
 function close () {
   document.body.classList.remove('modal-open');
   previewNewPhoto.classList.add('hidden');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('input', onDocumentKeydown);
   form.reset();
   pristine.reset();
 }
@@ -123,7 +123,7 @@ function close () {
 const open = () => {
   document.body.classList.add('modal-open');
   previewNewPhoto.classList.remove('hidden');
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('input', onDocumentKeydown);
 };
 
 form.addEventListener('change', open);
@@ -134,5 +134,5 @@ const onTextFieldFocus = (evt) => {
   evt.stopPropagation();
 };
 
-descriptionForm.addEventListener('keydown', onTextFieldFocus);
-hashtagsForm.addEventListener('keydown', onTextFieldFocus);
+descriptionForm.addEventListener('input', onTextFieldFocus);
+hashtagsForm.addEventListener('input', onTextFieldFocus);
