@@ -19,4 +19,4 @@ const closeOnEscDown = (evt, cb) => {
   }
 };
 
-export {getRandomArrayElement, getRandomInteger, closeOnEscDown};
+export {getRandomArrayElement, getRandomInteger, closeOnEscDown, isEscapeKey};
