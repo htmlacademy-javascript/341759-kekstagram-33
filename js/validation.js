@@ -1,16 +1,18 @@
 import { isEscapeKey } from './util.js';
 import './../vendor/pristine/pristine.min.js';
+import './effects.js';
+import { image, sliderUpload } from './effects.js';
 
 const MAX_DESCRIPTION = 140;
 const MAX_DESCRIPTION_HASHTAGS = 20;
 const MAX_HASHTAGS = 5;
 
 const form = document.querySelector('.img-upload__form');
-const previewNewPhoto = document.querySelector('.img-upload__overlay');
-const buttonCancelForm = document.querySelector('.img-upload__cancel');
-const descriptionForm = document.querySelector('.text__description');
-const hashtagsForm = document.querySelector('.text__hashtags');
-const publicet = document.querySelector('.img-upload__submit');
+const previewNewPhoto = form.querySelector('.img-upload__overlay');
+const buttonCancelForm = form.querySelector('.img-upload__cancel');
+const descriptionForm = form.querySelector('.text__description');
+const hashtagsForm = form.querySelector('.text__hashtags');
+const publicet = form.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -115,6 +117,9 @@ function close () {
   document.body.classList.remove('modal-open');
   previewNewPhoto.classList.add('hidden');
   document.removeEventListener('input', onDocumentKeydown);
+  image.style.transform = 'none';
+  image.style.filter = 'none';
+  sliderUpload.classList.add('visually-hidden');
   form.reset();
   pristine.reset();
 }
