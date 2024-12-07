@@ -107,7 +107,7 @@ form.addEventListener('submit', (evt) => {
 });
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && !document.querySelector('.error')) {
     evt.preventDefault();
     close();
   }
@@ -116,7 +116,7 @@ const onDocumentKeydown = (evt) => {
 function close () {
   document.body.classList.remove('modal-open');
   previewNewPhoto.classList.add('hidden');
-  document.removeEventListener('input', onDocumentKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
   image.style.transform = 'none';
   image.style.filter = 'none';
   sliderUpload.classList.add('visually-hidden');
@@ -127,7 +127,7 @@ function close () {
 const open = () => {
   document.body.classList.add('modal-open');
   previewNewPhoto.classList.remove('hidden');
-  document.addEventListener('input', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 form.addEventListener('change', open);
@@ -138,5 +138,7 @@ const onTextFieldFocus = (evt) => {
   evt.stopPropagation();
 };
 
-descriptionForm.addEventListener('input', onTextFieldFocus);
-hashtagsForm.addEventListener('input', onTextFieldFocus);
+descriptionForm.addEventListener('keydown', onTextFieldFocus);
+hashtagsForm.addEventListener('keydown', onTextFieldFocus);
+
+export { form, pristine, close };
