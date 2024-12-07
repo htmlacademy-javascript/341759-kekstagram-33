@@ -29,7 +29,6 @@ const scaleValue = document.querySelector('.scale__control--value');
 const decreaseScaleButton = document.querySelector('.scale__control--smaller');
 const increaseScaleButton = document.querySelector('.scale__control--bigger');
 
-
 let currentScaleValue = Zoom.MAX;
 
 const getScaleValue = () => {
@@ -37,21 +36,20 @@ const getScaleValue = () => {
   image.style.transform = `scale(${currentScaleValue / Zoom.MAX})`;
 };
 
-function getChangeScale(thisButton, otherButton, minScaleValue, maxScaleValue, step) {
+function getChangeScale(thisButton, otherButton, maxScaleValue, step) {
   return function () {
     otherButton.disabled = false;
     currentScaleValue = currentScaleValue + step;
-    if (currentScaleValue === maxScaleValue || currentScaleValue === minScaleValue) {
+    if (currentScaleValue === maxScaleValue) {
       thisButton.disabled = true;
     }
     getScaleValue(currentScaleValue);
   };
-
 }
 
-increaseScaleButton.addEventListener('click', getChangeScale(increaseScaleButton, decreaseScaleButton, Zoom.MIN, Zoom.MAX, Zoom.STEP));
-decreaseScaleButton.addEventListener('click', getChangeScale(decreaseScaleButton, increaseScaleButton, Zoom.MIN, Zoom.MAX, -Zoom.STEP));
-
+increaseScaleButton.disabled = true;
+increaseScaleButton.addEventListener('click', getChangeScale(increaseScaleButton, decreaseScaleButton, Zoom.MAX, Zoom.STEP));
+decreaseScaleButton.addEventListener('click', getChangeScale(decreaseScaleButton, increaseScaleButton, Zoom.MIN, -Zoom.STEP));
 
 effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
 let currentEffect = '';
@@ -120,9 +118,7 @@ noUiSlider.create(slider, {
 
 slider.noUiSlider.on('change', () => {
   effectLevelValue.value = slider.noUiSlider.get();
-
   image.style.filter = effects[currentEffect]();
 });
-
 
 export { image, sliderUpload };
