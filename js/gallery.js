@@ -1,7 +1,16 @@
 import{ showBigPhoto } from './big-picture.js';
+import { getRandomNumber } from './util.js';
 
 const containerPhotos = document.querySelector('.pictures');
 const similarPhotosTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const photoFragment = document.createDocumentFragment();
+
+const clearThumbnails = () => {
+  const photos = document.querySelectorAll('.picture');
+  photos.forEach((element) => {
+    element.remove();
+  });
+};
 
 const renderPhoto = (picture) => {
   const {url, likes, comments} = picture;
@@ -22,9 +31,25 @@ const renderPhoto = (picture) => {
   return photoElement;
 };
 
-const renderPhotos = (photos) => {
-  const photoFragment = document.createDocumentFragment();
+const getRandomPhotos = (photos, count) => {
+  const randomPhotos = [];
+  const usedIndexes = new Set();
 
+  while (randomPhotos.length < count && randomPhotos.length < photos.length) {
+    const randomIndex = getRandomNumber(0, photos.length - 1);
+    if (!usedIndexes.has(randomIndex)) {
+      usedIndexes.add(randomIndex);
+      randomPhotos.push(photos[randomIndex]);
+    }
+  }
+
+  return randomPhotos;
+};
+
+const getDiscussedPhotos = (photos) => [...photos].sort((a, b) => b.comments.length - a.comments.length);
+
+const renderPhotos = (photos) => {
+  clearThumbnails();
   photos.forEach((photo) => {
     photoFragment.append(renderPhoto(photo));
   });
@@ -32,4 +57,4 @@ const renderPhotos = (photos) => {
   containerPhotos.append(photoFragment);
 };
 
-export {renderPhotos};
+export { renderPhotos, getRandomPhotos, getDiscussedPhotos };
