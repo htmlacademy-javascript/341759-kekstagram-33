@@ -21,7 +21,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-// Удаляет переданный контейнер и снимает обработчики событий
 const setupCloseHandlers = (container, closeButton, inner, options = () => {}) => {
   const removeContainer = () => {
     container.remove();
@@ -50,7 +49,6 @@ const setupCloseHandlers = (container, closeButton, inner, options = () => {}) =
   document.addEventListener('click', onOutsideClick);
 };
 
-//настройка сообщения об успешной загрузке
 const showSuccess = () => {
   const fragment = document.createDocumentFragment();
   const successContainer = templateSuccess.cloneNode(true);
@@ -62,7 +60,6 @@ const showSuccess = () => {
   setupCloseHandlers(successContainer, successButton, innerContainer , close);
 };
 
-//настройка сообщения о неуспешной загрузке
 const showError = () => {
   const fragment = document.createDocumentFragment();
   const errorContainer = templateError.cloneNode(true);

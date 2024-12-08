@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 5000;
+
 const Keys = {
   ESC: 'Esc',
   ESCAPE: 'Escape',
@@ -18,8 +20,6 @@ const closeOnEscDown = (evt, cb) => {
     cb();
   }
 };
-
-const ALERT_SHOW_TIME = 5000;
 
 const templateErrorData = document.querySelector('#data-error').content.querySelector('.data-error');
 
