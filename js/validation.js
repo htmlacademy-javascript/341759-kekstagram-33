@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import './../vendor/pristine/pristine.min.js';
 import './effects.js';
-import { image, sliderUpload } from './effects.js';
+import { image, sliderUpload, resetScale } from './effects.js';
 
 const MAX_DESCRIPTION = 140;
 const MAX_DESCRIPTION_HASHTAGS = 20;
@@ -125,6 +125,7 @@ function close () {
   sliderUpload.classList.add('visually-hidden');
   form.reset();
   pristine.reset();
+  resetScale();
 }
 
 const open = () => {

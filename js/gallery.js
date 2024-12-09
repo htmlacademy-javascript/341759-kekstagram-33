@@ -1,4 +1,4 @@
-import{ showBigPhoto } from './big-picture.js';
+import{ openBigPhoto } from './picture.js';
 import { getRandomNumber } from './util.js';
 
 const containerPhotos = document.querySelector('.pictures');
@@ -13,17 +13,18 @@ const clearThumbnails = () => {
 };
 
 const renderPhoto = (picture) => {
-  const {url, likes, comments} = picture;
+  const {url, description, likes, comments} = picture;
   const photoElement = similarPhotosTemplate.cloneNode(true);
 
   photoElement.querySelector('.picture__img').src = url;
+  photoElement.querySelector('.picture__img').alt = description;
   photoElement.querySelector('.picture__likes').textContent = likes;
   photoElement.querySelector('.picture__comments').textContent = comments.length;
 
   const onPhotoElementClick = (evt) => {
     evt.preventDefault();
 
-    showBigPhoto(picture);
+    openBigPhoto(picture);
   };
 
   photoElement.addEventListener('click', onPhotoElementClick);

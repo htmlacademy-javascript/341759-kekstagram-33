@@ -2,14 +2,15 @@ import { form, pristine, close } from './validation.js';
 import { sendData } from './api.js';
 import { isEscapeKey } from './util.js';
 
-const submitButton = form.querySelector('.img-upload__submit');
-const templateSuccess = document.querySelector('#success').content.querySelector('.success');
-const templateError = document.querySelector('#error').content.querySelector('.error');
-
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикация...'
 };
+
+const submitButton = form.querySelector('.img-upload__submit');
+const templateSuccess = document.querySelector('#success').content.querySelector('.success');
+const templateError = document.querySelector('#error').content.querySelector('.error');
+
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -57,7 +58,7 @@ const showSuccess = () => {
   fragment.appendChild(successContainer);
   document.body.appendChild(fragment);
 
-  setupCloseHandlers(successContainer, successButton, innerContainer , close);
+  setupCloseHandlers(successContainer, successButton, innerContainer , close());
 };
 
 const showError = () => {
