@@ -1,13 +1,16 @@
 import { isEscapeKey } from './util.js';
 import './../vendor/pristine/pristine.min.js';
 import './effects.js';
-import { image, sliderUpload } from './effects.js';
+import { image, sliderUpload, resetScale } from './effects.js';
 
 const MAX_DESCRIPTION = 140;
 const MAX_DESCRIPTION_HASHTAGS = 20;
 const MAX_HASHTAGS = 5;
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const form = document.querySelector('.img-upload__form');
+const inputPhotoElement = form.querySelector('.img-upload__input');
 const previewNewPhoto = form.querySelector('.img-upload__overlay');
 const buttonCancelForm = form.querySelector('.img-upload__cancel');
 const descriptionForm = form.querySelector('.text__description');
@@ -122,6 +125,7 @@ function close () {
   sliderUpload.classList.add('visually-hidden');
   form.reset();
   pristine.reset();
+  resetScale();
 }
 
 const open = () => {
@@ -138,7 +142,21 @@ const onTextFieldFocus = (evt) => {
   evt.stopPropagation();
 };
 
+const onChooseFileBtnClick = () => {
+  open();
+
+  const file = inputPhotoElement.files[0];
+  const isCorrectFileType = FILE_TYPES.some((item) => file.name.toLowerCase().endsWith(item));
+  if (isCorrectFileType) {
+    image.src = URL.createObjectURL(file);
+  }
+  form.querySelectorAll('.effects__preview').forEach((item) => {
+    item.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+  });
+};
+
 descriptionForm.addEventListener('keydown', onTextFieldFocus);
 hashtagsForm.addEventListener('keydown', onTextFieldFocus);
+inputPhotoElement.addEventListener('change', onChooseFileBtnClick);
 
 export { form, pristine, close };

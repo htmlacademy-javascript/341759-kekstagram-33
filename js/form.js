@@ -2,14 +2,15 @@ import { form, pristine, close } from './validation.js';
 import { sendData } from './api.js';
 import { isEscapeKey } from './util.js';
 
-const submitButton = form.querySelector('.img-upload__submit');
-const templateSuccess = document.querySelector('#success').content.querySelector('.success');
-const templateError = document.querySelector('#error').content.querySelector('.error');
-
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикация...'
 };
+
+const submitButton = form.querySelector('.img-upload__submit');
+const templateSuccess = document.querySelector('#success').content.querySelector('.success');
+const templateError = document.querySelector('#error').content.querySelector('.error');
+
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -21,7 +22,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-// Удаляет переданный контейнер и снимает обработчики событий
 const setupCloseHandlers = (container, closeButton, inner, options = () => {}) => {
   const removeContainer = () => {
     container.remove();
@@ -50,7 +50,6 @@ const setupCloseHandlers = (container, closeButton, inner, options = () => {}) =
   document.addEventListener('click', onOutsideClick);
 };
 
-//настройка сообщения об успешной загрузке
 const showSuccess = () => {
   const fragment = document.createDocumentFragment();
   const successContainer = templateSuccess.cloneNode(true);
@@ -59,10 +58,9 @@ const showSuccess = () => {
   fragment.appendChild(successContainer);
   document.body.appendChild(fragment);
 
-  setupCloseHandlers(successContainer, successButton, innerContainer , close);
+  setupCloseHandlers(successContainer, successButton, innerContainer , close());
 };
 
-//настройка сообщения о неуспешной загрузке
 const showError = () => {
   const fragment = document.createDocumentFragment();
   const errorContainer = templateError.cloneNode(true);

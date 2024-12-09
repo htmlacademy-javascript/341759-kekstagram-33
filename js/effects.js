@@ -2,7 +2,7 @@ import './../vendor/nouislider/nouislider.js';
 
 const DEFAULT_EFFECT_LEVEL = 100;
 const RADIX = 10;
-const EFFECTS_STEP = 0.01;
+const EFFECTS_STEP = 0.1;
 const MAX_BLUR_VALUE = 3;
 const MAX_BRIGHTNESS = 3;
 
@@ -36,20 +36,36 @@ const getScaleValue = () => {
   image.style.transform = `scale(${currentScaleValue / Zoom.MAX})`;
 };
 
-function getChangeScale(thisButton, otherButton, maxScaleValue, step) {
-  return function () {
-    otherButton.disabled = false;
-    currentScaleValue = currentScaleValue + step;
-    if (currentScaleValue === maxScaleValue) {
-      thisButton.disabled = true;
-    }
-    getScaleValue(currentScaleValue);
-  };
-}
+const getChangeScale = (thisButton, otherButton, maxScaleValue, step) => {
+  otherButton.disabled = false;
+  if (currentScaleValue === maxScaleValue) {
+    thisButton.disabled = true;
+    currentScaleValue = maxScaleValue;
+    scaleValue.value = `${maxScaleValue}%`;
+  } else {
+    currentScaleValue += step;
+  }
+  getScaleValue();
+};
+
+const resetScale = () => {
+  currentScaleValue = Zoom.MAX;
+  getScaleValue();
+};
 
 increaseScaleButton.disabled = true;
-increaseScaleButton.addEventListener('click', getChangeScale(increaseScaleButton, decreaseScaleButton, Zoom.MAX, Zoom.STEP));
-decreaseScaleButton.addEventListener('click', getChangeScale(decreaseScaleButton, increaseScaleButton, Zoom.MIN, -Zoom.STEP));
+
+const onPlusButtonClick = () => {
+  getChangeScale(increaseScaleButton, decreaseScaleButton, Zoom.MAX, Zoom.STEP);
+};
+
+const onMinusButtonClick = () => {
+  getChangeScale(decreaseScaleButton, increaseScaleButton, Zoom.MIN, -Zoom.STEP);
+};
+
+increaseScaleButton.addEventListener('click', onPlusButtonClick);
+decreaseScaleButton.addEventListener('click', onMinusButtonClick);
+
 
 effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
 let currentEffect = '';
@@ -64,7 +80,7 @@ const effects = {
 
   chrome: () => {
     sliderUpload.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(effectLevelValue.value, RADIX) * EFFECTS_STEP})`;
+    return `grayscale(${parseInt(effectLevelValue.value, RADIX)})`;
   },
 
   sepia: () => {
@@ -121,4 +137,4 @@ slider.noUiSlider.on('change', () => {
   image.style.filter = effects[currentEffect]();
 });
 
-export { image, sliderUpload };
+export { image, sliderUpload, resetScale };
