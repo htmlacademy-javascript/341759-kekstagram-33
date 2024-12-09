@@ -2,7 +2,7 @@ import './../vendor/nouislider/nouislider.js';
 
 const DEFAULT_EFFECT_LEVEL = 100;
 const RADIX = 10;
-const EFFECTS_STEP = 0.1;
+const EFFECTS_STEP = 0.01;
 const MAX_BLUR_VALUE = 3;
 const MAX_BRIGHTNESS = 3;
 
@@ -80,7 +80,7 @@ const effects = {
 
   chrome: () => {
     sliderUpload.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(effectLevelValue.value, RADIX)})`;
+    return `grayscale(${parseInt(effectLevelValue.value, RADIX) * EFFECTS_STEP})`;
   },
 
   sepia: () => {
