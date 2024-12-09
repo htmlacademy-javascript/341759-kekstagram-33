@@ -12,8 +12,6 @@ function getRandomInteger(min, max) {
   return Math.floor(result);
 }
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
 const isEscapeKey = (evt) => evt.key === Keys.ESCAPE || evt.key === Keys.ESC;
 const closeOnEscDown = (evt, cb) => {
   if (isEscapeKey(evt)) {
@@ -22,13 +20,6 @@ const closeOnEscDown = (evt, cb) => {
 };
 
 const templateErrorData = document.querySelector('#data-error').content.querySelector('.data-error');
-
-const getRandomNumber = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
 
 const showErrorData = () => {
   const fragment = document.createDocumentFragment();
@@ -49,4 +40,4 @@ function debounce (callback, timeoutDelay) {
   };
 }
 
-export { getRandomArrayElement, getRandomInteger, closeOnEscDown, isEscapeKey, showErrorData, getRandomNumber, debounce };
+export { getRandomInteger, closeOnEscDown, isEscapeKey, showErrorData, debounce };

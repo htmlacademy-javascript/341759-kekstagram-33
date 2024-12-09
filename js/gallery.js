@@ -1,5 +1,5 @@
 import{ openBigPhoto } from './picture.js';
-import { getRandomNumber } from './util.js';
+import { getRandomInteger } from './util.js';
 
 const containerPhotos = document.querySelector('.pictures');
 const similarPhotosTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -37,7 +37,7 @@ const getRandomPhotos = (photos, count) => {
   const usedIndexes = new Set();
 
   while (randomPhotos.length < count && randomPhotos.length < photos.length) {
-    const randomIndex = getRandomNumber(0, photos.length - 1);
+    const randomIndex = getRandomInteger(0, photos.length - 1);
     if (!usedIndexes.has(randomIndex)) {
       usedIndexes.add(randomIndex);
       randomPhotos.push(photos[randomIndex]);
